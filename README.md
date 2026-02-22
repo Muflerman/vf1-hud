@@ -5,46 +5,86 @@ Rediseño completo y optimizado del HUD para FiveM por **mfl-scrpts**.
 ![76938c9968fc031fad35565497eea9ae](https://github.com/user-attachments/assets/46a284c0-3ed2-4c12-b87d-d766f5b2dd64)
 ![8b906999e4e2cf1417b688b738324049](https://github.com/user-attachments/assets/6dd70faa-e946-43e6-9bde-7a72135085a6)
 
-Acknowledgements:
-This resource is a deep rework based on the original mt-hud. Special thanks to MT-Scripts for providing the excellent foundation on which we built this new premium design.
+🎮 vf1-hud
+
+A premium, modern, and highly optimized HUD for FiveM servers.
+Designed to provide a clean interface, smooth performance, and an immersive player experience.
+
+🙏 Acknowledgements
+
+This resource is a deep rework based on the original mt-hud.
+Special thanks to MT-Scripts for providing the excellent foundation on which this new premium design was built.
 
 ✨ Main Features
+👤 Dynamic Player HUD
 
-Dynamic Player HUD: Health, Armor (only if > 0), Hunger, Thirst, and Voice.
+Health
 
-Smart Voice: Spanish labels (whisper, normal, shout) with a green neon speaking indicator.
+Armor (only visible if > 0)
 
-Centered Stamina: Premium stamina bar centered at the bottom, inspired by modern designs. Only appears during physical activity.
+Hunger
 
-Premium Car HUD:
+Thirst
 
-High-contrast speedometer with vibration effect at high speeds (> 220 KMH).
+Voice indicator
 
-Dynamic and smooth segmented RPM bar.
+🎤 Smart Voice System
 
-Vertical Engine and Fuel indicators.
+Spanish voice labels:
 
-Amber/brown styled header boxes for Location, Street, and Gear (ALL CAPS).
+Whisper
 
-The Car HUD only appears when the vehicle’s engine is running.
+Normal
 
-Optimized Square Minimap: Based on the “Dalrae solve,” automatically adjusted for all screen resolutions.
+Shout
 
-Extreme Optimization: 100ms update latency for total smoothness (0.01ms – 0.03ms resmon usage).
+Green neon speaking indicator
 
-🛠️ Dependencies
+🏃 Centered Stamina Bar
+
+Premium stamina bar centered at the bottom of the screen
+
+Inspired by modern HUD designs
+
+Only appears during physical activity
+
+🚗 Premium Car HUD
+
+High-contrast speedometer
+
+Vibration effect at high speeds (> 220 KMH)
+
+Dynamic and smooth segmented RPM bar
+
+Vertical Engine and Fuel indicators
+
+Amber/Brown styled header boxes for:
+
+LOCATION
+
+STREET
+
+GEAR
+(Displayed in ALL CAPS)
+
+Car HUD only appears when the vehicle engine is running
+
+🗺 Optimized Square Minimap
+
+Based on the "Dalrae solve"
+
+Automatically adjusts to all screen resolutions
+
+⚡ Extreme Optimization
+
+100ms update interval
+
+Ultra low resmon usage: 0.01ms – 0.03ms
+
+Built for performance without sacrificing visual quality.
+
+🛠 Dependencies
 
 qb-core or qbx_core
 
 ox_lib
-
-📋 Installation
-
-Resource folder name: vf1-hud
-
-Ensure dependencies are installed.
-
-Add ensure vf1-hud to your server.cfg.
-
-© 2026 mfl-scrpts – Quality & Performance.
-Original base: MT-Scripts (mt-hud)

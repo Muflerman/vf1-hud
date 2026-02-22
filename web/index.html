@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MT HUD - Premium Redesign</title>
+    <!-- Modern Typography -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <!-- Style and Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Player HUD Container -->
+        <div id="player-hud">
+            <!-- Armor Bar (Top, white) -->
+            <div id="armor-row" class="hud-row hidden">
+                <div class="hud-icon-box">
+                    <i class="fas fa-vest"></i>
+                </div>
+                <div class="hud-bar-track">
+                    <div id="armor-bar" class="hud-bar progress-white"></div>
+                </div>
+                <div class="hud-percent" id="armor-val">0%</div>
+            </div>
+
+            <!-- Health Bar (Second, green pulse) -->
+            <div id="health-row" class="hud-row">
+                <div class="hud-icon-box">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="hud-bar-track">
+                    <div id="health-bar" class="hud-bar progress-green"></div>
+                </div>
+                <div class="hud-percent" id="health-val">0%</div>
+            </div>
+
+            <!-- Bottom Row (Hunger, Thirst, Stamina, Voice) -->
+            <div class="hud-bottom-row">
+                <!-- Hunger -->
+                <div id="hunger-row" class="mini-hud-item">
+                    <i class="fas fa-pizza-slice mini-icon"></i>
+                    <div class="mini-bar-track">
+                        <div id="hunger-bar" class="mini-bar progress-yellow"></div>
+                    </div>
+                    <div class="mini-percent" id="hunger-val">0%</div>
+                </div>
+
+                <!-- Thirst -->
+                <div id="thirst-row" class="mini-hud-item">
+                    <i class="fas fa-droplet mini-icon"></i>
+                    <div class="mini-bar-track">
+                        <div id="thirst-bar" class="mini-bar progress-blue"></div>
+                    </div>
+                    <div class="mini-percent" id="thirst-val">0%</div>
+                </div>
+
+                <!-- Voice -->
+                <div id="voice-row" class="mini-hud-item">
+                    <i class="fas fa-microphone mini-icon" id="voice-icon"></i>
+                    <div class="mini-bar-track">
+                        <div id="voice-bar" class="mini-bar progress-purple"></div>
+                    </div>
+                    <div class="mini-percent" id="voice-val">normal</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Centered Stamina Bar -->
+        <div id="stamina-container" class="hidden">
+            <div class="stamina-header">Stamina</div>
+            <div class="stamina-content">
+                <i class="fas fa-running stamina-icon"></i>
+                <div class="stamina-track">
+                    <div id="stamina-bar" class="stamina-fill"></div>
+                </div>
+                <div id="stamina-val" class="stamina-val">50%</div>
+            </div>
+        </div>
+
+        <!-- Rediseño del Car HUD -->
+        <div id="vehicle-hud-container">
+            <!-- Fila superior: Localización y Marcha -->
+            <div class="veh-header-row">
+                <div class="veh-box location-box">
+                    <i class="fas fa-location-dot"></i>
+                </div>
+                <div class="veh-box street-box">
+                    <span id="direction">N</span>
+                    <span class="separator">|</span>
+                    <span id="street1">Cargando...</span>
+                </div>
+                <div class="veh-box gear-box">
+                    <span id="gear">N</span>
+                </div>
+            </div>
+
+            <!-- Cuerpo central: Velocidad y Barras Verticales -->
+            <div class="veh-body">
+                <div class="speed-container">
+                    <span id="speed">0</span>
+                    <span class="speed-unit">KMH</span>
+                </div>
+                <div class="status-vertical-bars">
+                    <!-- Engine health -->
+                    <div class="v-bar-item">
+                        <div class="v-bar-track">
+                            <div id="engine-bar" class="v-bar-fill progress-red"></div>
+                        </div>
+                        <i class="fas fa-wrench mini-icon-v"></i>
+                    </div>
+                    <!-- Fuel level -->
+                    <div class="v-bar-item">
+                        <div class="v-bar-track">
+                            <div id="fuel-bar" class="v-bar-fill progress-orange"></div>
+                        </div>
+                        <i class="fas fa-gas-pump mini-icon-v"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila inferior: Barra de RPM segmentada -->
+            <div class="rpm-container">
+                <div id="rpm-segments" class="rpm-wrapper">
+                    <!-- Los segmentos se generarán por JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

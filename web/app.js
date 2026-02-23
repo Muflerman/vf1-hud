@@ -78,9 +78,51 @@ $(document).ready(function () {
     }
 
     function updateVehicleHUD(data) {
-        // Velocidad y Marcha
-        $('#speed').text(data.speed);
-        $('#gear').text(data.gear == 0 ? 'R' : data.gear);
+        // Velocidad con padding de ceros y opacidad en ceros a la izquierda
+        let speed = Math.floor(data.speed);
+        let speedStr = speed.toString().padStart(3, '0');
+        let speedHtml = '';
+        let leading = true;
+
+        for (let i = 0; i < speedStr.length; i++) {
+            if (speedStr[i] !== '0') leading = false;
+            // El último dígito nunca es dim, y los ceros a la izquierda sí
+            let isDim = leading && i < speedStr.length - 1;
+            speedHtml += `<span class="${isDim ? 'dim' : ''}">${speedStr[i]}</span>`;
+        }
+        $('#speed').html(speedHtml);
+
+        // Marcha Activa (Simple: Icono + Número)
+        let currentGear = data.gear;
+        if (currentGear == 0) currentGear = 'R';
+        if (data.speed == 0 && currentGear != 'R') currentGear = 'N';
+        $('#gear').text(currentGear);
+
+        // Lógica de RPM (Barra Segmentada)
+        const maxRpmSegments = 20;
+        let rpmBar = $('#rpm-bar');
+
+        if (rpmBar.children().length !== maxRpmSegments) {
+            rpmBar.empty();
+            for (let i = 0; i < maxRpmSegments; i++) {
+                rpmBar.append('<div class="rpm-segment"></div>');
+            }
+        }
+
+        let activeRpmCount = Math.floor(data.rpm * maxRpmSegments);
+        rpmBar.children().each(function (index) {
+            if (index < activeRpmCount) {
+                $(this).addClass('active');
+                // Los últimos 4 segmentos son críticos (rojos)
+                if (index >= maxRpmSegments - 4) {
+                    $(this).addClass('critical');
+                } else {
+                    $(this).removeClass('critical');
+                }
+            } else {
+                $(this).removeClass('active critical');
+            }
+        });
 
         // Efecto sensación de velocidad
         if (data.speed > 220) {
@@ -89,35 +131,54 @@ $(document).ready(function () {
             $('#speed').removeClass('speeding');
         }
 
-        // Ubicación
-        $('#street1').text(data.street1);
-        $('#direction').text(data.direction);
+        // Combustible (Horizontal) con colores dinámicos
+        $('#fuel-fill').css('width', data.fuel + "%");
 
-        // Barras Verticales (Motor y Gasolina)
-        // El motor suele venir de 0 a 1000
-        let enginePercent = (data.engine / 1000) * 100;
-        $('#engine-bar').css('height', enginePercent + "%");
-        $('#fuel-bar').css('height', data.fuel + "%");
-
-        // Lógica de Segmentos de RPM
-        const maxSegments = 25;
-        let rpmContainer = $('#rpm-segments');
-
-        if (rpmContainer.children().length === 0) {
-            for (let i = 0; i < maxSegments; i++) {
-                rpmContainer.append('<div class="rpm-segment"></div>');
-            }
+        let fuelColor = '#00ffcc'; // Verde por defecto
+        if (data.fuel <= 25) {
+            fuelColor = '#ff3b3b'; // Rojo crítico
+        } else if (data.fuel <= 65) {
+            fuelColor = '#ffcf4b'; // Amarillo medio
         }
 
-        // data.rpm viene de 0.0 a 1.0
-        let activeCount = Math.floor(data.rpm * maxSegments);
-        rpmContainer.children().each(function (index) {
-            if (index < activeCount) {
-                $(this).addClass('active');
-            } else {
-                $(this).removeClass('active');
-            }
+        $('#fuel-fill').css({
+            'background': fuelColor,
+            'box-shadow': `0 0 10px ${fuelColor}80` // Glow dinámico (80 es opacidad hex)
         });
+
+        // Iconos de Estado (Engine, Lights, Doors, Seatbelt)
+        // Motor (Verde si está sano, Rojo si está dañado)
+        if (data.engine >= 600) {
+            $('#engine-status').addClass('active');
+        } else {
+            $('#engine-status').removeClass('active');
+        }
+
+        // Luces (Verde si están encendidas, Rojo si están apagadas)
+        if (data.lights) {
+            $('#lights-status').addClass('active');
+        } else {
+            $('#lights-status').removeClass('active');
+        }
+
+        // Bloqueo de Puertas (Verde si está CERRADO, Rojo si está ABIERTO)
+        if (data.doors) {
+            $('#doors-status').addClass('active');
+        } else {
+            $('#doors-status').removeClass('active');
+        }
+
+        // Cinturón (Verde si está PUESTO, Rojo si NO está puesto)
+        if (data.seatbelt) {
+            $('#seatbelt-status').addClass('active');
+        } else {
+            $('#seatbelt-status').removeClass('active');
+        }
+
+        // --- Calles y Dirección ---
+        $('#direction').text(data.direction);
+        $('#street-1').text(data.street1);
+        $('#street-2').text(data.street2 || ""); // Si no hay cruce, vacío
     }
 
     window.addEventListener('message', function (event) {
@@ -133,10 +194,14 @@ $(document).ready(function () {
                 updatePlayerHUD(data);
                 break;
             case 'showVehicleHUD':
-                $('#vehicle-hud-container').css('display', 'flex').hide().fadeIn(400);
+                $('#vehicle-hud-new').css('display', 'flex').hide().fadeIn(400);
+                $('#street-container').removeClass('hidden').hide().fadeIn(400);
                 break;
             case 'hideVehicleHUD':
-                $('#vehicle-hud-container').fadeOut(400);
+                $('#vehicle-hud-new').fadeOut(400);
+                $('#street-container').fadeOut(400, function () {
+                    $(this).addClass('hidden');
+                });
                 break;
             case 'updateVehicleHUD':
                 updateVehicleHUD(data);

@@ -72,16 +72,23 @@ CreateThread(function()
                     talking = NetworkIsPlayerTalking(PlayerId()),
                 })
 
-                local isBicycle = GetVehicleClass(vehicle) == 13
+                local vehicle = GetVehiclePedIsIn(ped, false)
+                local inVehicle = (vehicle ~= 0)
+                local isBicycle = inVehicle and (GetVehicleClass(vehicle) == 13)
+                local engineRunning = inVehicle and GetIsVehicleEngineRunning(vehicle)
 
-                if IsPedInAnyVehicle(ped) and GetIsVehicleEngineRunning(vehicle) and not isBicycle then
+                if inVehicle and not isBicycle and engineRunning then
                     if not vehicleHUDActive then
                         vehicleHUDActive = true
                         DisplayRadar(true)
                         TriggerEvent('hud:client:LoadMap')
                         SendNUIMessage({ action = 'showVehicleHUD' })
                     end
+
                     local crossroads = getCrossroads(vehicle)
+                    local _, low, high = GetVehicleLightsState(vehicle)
+                    local isLocked = GetVehicleDoorLockStatus(vehicle) > 1
+
                     SendNUIMessage({
                         action = 'updateVehicleHUD',
                         speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
@@ -91,7 +98,10 @@ CreateThread(function()
                         street2 = crossroads[2],
                         direction = GetDirectionText(GetEntityHeading(vehicle)),
                         rpm = GetVehicleCurrentRpm(vehicle),
-                        engine = GetVehicleEngineHealth(vehicle)
+                        engine = GetVehicleEngineHealth(vehicle),
+                        lights = (low == 1 or high == 1),
+                        doors = isLocked,
+                        seatbelt = LocalPlayer.state.seatbelt or false
                     })
                 else
                     if vehicleHUDActive then

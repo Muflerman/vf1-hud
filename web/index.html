@@ -21,7 +21,7 @@
     <div id="wrapper">
         <!-- Player HUD Container -->
         <div id="player-hud">
-            <!-- Armor Bar (Top, white) -->
+            <!-- Armor Bar (Top visually, first in HTML) -->
             <div id="armor-row" class="hud-row hidden">
                 <div class="hud-icon-box">
                     <i class="fas fa-vest"></i>
@@ -32,7 +32,7 @@
                 <div class="hud-percent" id="armor-val">0%</div>
             </div>
 
-            <!-- Health Bar (Second, green pulse) -->
+            <!-- Health Bar (Middle visually, second in HTML) -->
             <div id="health-row" class="hud-row">
                 <div class="hud-icon-box">
                     <i class="fas fa-heart"></i>
@@ -43,7 +43,7 @@
                 <div class="hud-percent" id="health-val">0%</div>
             </div>
 
-            <!-- Bottom Row (Hunger, Thirst, Stamina, Voice) -->
+            <!-- Bottom Row (Hunger, Thirst, Stamina, Voice) - FIXED AT BOTTOM -->
             <div class="hud-bottom-row">
                 <!-- Hunger -->
                 <div id="hunger-row" class="mini-hud-item">
@@ -86,51 +86,59 @@
             </div>
         </div>
 
+        <!-- Streets and Direction (Next to minimap) -->
+        <div id="street-container" class="hidden">
+            <div class="direction-box" id="direction">N</div>
+            <div class="street-info">
+                <div id="street-1">Street Name</div>
+                <div id="street-2">Crossroad</div>
+            </div>
+        </div>
+
         <!-- Rediseño del Car HUD -->
-        <div id="vehicle-hud-container">
-            <!-- Fila superior: Localización y Marcha -->
-            <div class="veh-header-row">
-                <div class="veh-box location-box">
-                    <i class="fas fa-location-dot"></i>
+        <div id="vehicle-hud-new">
+            <div class="hud-main-content">
+                <!-- Revoluciones (RPM) -->
+                <div class="rpm-bar-container" id="rpm-bar">
+                    <!-- Segmentos generados por JS -->
                 </div>
-                <div class="veh-box street-box">
-                    <span id="direction">N</span>
-                    <span class="separator">|</span>
-                    <span id="street1">Cargando...</span>
-                </div>
-                <div class="veh-box gear-box">
-                    <span id="gear">N</span>
-                </div>
-            </div>
 
-            <!-- Cuerpo central: Velocidad y Barras Verticales -->
-            <div class="veh-body">
-                <div class="speed-container">
-                    <span id="speed">0</span>
-                    <span class="speed-unit">KMH</span>
-                </div>
-                <div class="status-vertical-bars">
-                    <!-- Engine health -->
-                    <div class="v-bar-item">
-                        <div class="v-bar-track">
-                            <div id="engine-bar" class="v-bar-fill progress-red"></div>
+                <!-- Velocidad y Marcha -->
+                <div class="speed-section">
+                    <div class="speed-numbers">
+                        <span id="speed">000</span>
+                        <div class="unit-gear-group">
+                            <div class="gear-indicator-box">
+                                <i class="fas fa-cog"></i>
+                                <span id="gear">N</span>
+                            </div>
+                            <span class="speed-unit">KM/H</span>
+
+                            <!-- Gasolina Horizontal debajo de KM/H -->
+                            <div class="fuel-h-wrap">
+                                <div class="fuel-h-track">
+                                    <div id="fuel-fill" class="fuel-h-fill"></div>
+                                </div>
+                                <i class="fas fa-gas-pump"></i>
+                            </div>
                         </div>
-                        <i class="fas fa-wrench mini-icon-v"></i>
-                    </div>
-                    <!-- Fuel level -->
-                    <div class="v-bar-item">
-                        <div class="v-bar-track">
-                            <div id="fuel-bar" class="v-bar-fill progress-orange"></div>
-                        </div>
-                        <i class="fas fa-gas-pump mini-icon-v"></i>
                     </div>
                 </div>
-            </div>
 
-            <!-- Fila inferior: Barra de RPM segmentada -->
-            <div class="rpm-container">
-                <div id="rpm-segments" class="rpm-wrapper">
-                    <!-- Los segmentos se generarán por JS -->
+                <!-- Iconos de Estado -->
+                <div class="status-indicators">
+                    <div id="engine-status" class="status-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div id="lights-status" class="status-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div id="doors-status" class="status-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div id="seatbelt-status" class="status-icon">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
                 </div>
             </div>
         </div>

@@ -19,44 +19,37 @@ Special thanks to MT-Scripts for providing the excellent foundation on which thi
 👤 Dynamic Player HUD
 
 *   **Intelligent Visibility:** HUD stays hidden during selection screens (multicharacter), spawn menus, and pause menu. Only appears once the player is logged in.
-*   **Dynamic Health Bar:** Smart color transition. Green at 100%, smoothly degrading to deep red as health decreases.
+*   **Dynamic Health Bar:** Smart color transition from neon green to deep red.
 *   **Dynamic Armor Bar:** Premium blue-to-white gradient. Only visible if armor > 0.
-*   **Hunger & Thirst:** Clean indicators with smooth updates.
-*   **Voice indicator:** Integrated voice range feedback.
+*   **Anchored Stability:** The HUD is anchored to the bottom. When Armor appears, it grows upwards without shifting existing elements down.
+*   **Hunger & Thirst:** Clean indicators with smooth updates and compact layout.
+*   **Voice indicator:** Integrated voice range feedback with whisper/normal/shout labels.
 
 🎤 Smart Voice System
-
-Spanish voice labels:
-
-Whisper
-
-Normal
-
-Shout
-
-Green neon speaking indicator
+*   **Labels:** Susurrar (Whisper), Normal, Gritar (Shout).
+*   **Activity:** Green neon glow when the player is actively speaking.
 
 🏃 Centered Stamina Bar
+*   **Design:** Premium stamina bar centered at the bottom of the screen.
+*   **Oxygen:** Automatically switches to oxygen tracking when underwater.
+*   **Visibility:** Only appears during physical activity or when stamina is being used.
 
-Premium stamina bar centered at the bottom of the screen
+🚗 Premium Car HUD (Redesigned)
 
-Inspired by modern HUD designs
-
-Only appears during physical activity
-
-🚗 Premium Car HUD
-
-*   **Fixed Visibility:** The Car HUD is strictly tied to vehicle state. Only appears when inside a motorized vehicle with the engine running.
-*   **Bicycle Exclusion:** The Car HUD automatically stays hidden when riding bicycles (Class 13) for a cleaner, more realistic experience.
-*   **High-contrast speedometer:** Crisp and clear speed reading.
-*   **Vibration effect:** Immersive shaking effect at high speeds (> 220 KMH).
-*   **Segmented RPM bar:** Dynamic and smooth RPM visualizer.
-*   **Vertical indicators:** Engine health and Fuel level bars.
-*   **Styled headers:** Location, Street, and Gear boxes in amber/brown style.
+*   **Engine-Based Visibility:** Strictly tied to vehicle engine state. Only appears when the engine is running and player is inside.
+*   **Horizontal Fuel Bar:** Redesigned horizontal fuel gauge integrated under the KM/H unit with dynamic colors (Green/Yellow/Red).
+*   **Status Icons System:** Premium indicators for **Engine, Lights, Lock Status, and Seatbelt**.
+    *   **Neon Green:** Safe/Active status.
+    *   **Intense Red:** Alert/Warning/Inactive status.
+*   **Segmented RPM bar:** 20-segment high-performance visualizer with critical red zone.
+*   **Street Info & Compass:** Anchored next to the minimap showing current street, crossroad, and compass direction in a styled box.
+*   **High-contrast Speedometer:** Large numbers with zero-padding and dimming effect.
+*   **Vibration effect:** Immersive shaking and color shift warning at high speeds (> 220 KMH).
 
 ✨ Interface Cleanliness
-*   **Zero-Flicker Native Hiding:** Deep integration to hide default GTA V components (Vehicle Name, Area, Street, etc.) every frame, ensuring they NEVER flash or appear over our premium HUD.
-*   **Optimized Map Alignment:** Square minimap perfectly aligned and framed for all resolutions.
+*   **Zero-Flicker Native Hiding:** Deep integration to hide default GTA V components (Vehicle Name, Area, Street, etc.) ensuring they never flash.
+*   **Optimized Map Alignment:** Square minimap perfectly aligned with a premium border across all aspect ratios.
+*   **UI Anchoring:** All elements are fixed to prevent "jumping" when names change or HUD items appear/disappear.
 
 🗺 Optimized Square Minimap
 
@@ -77,4 +70,3 @@ Built for performance without sacrificing visual quality.
 qb-core or qbx_core
 
 ox_lib
-

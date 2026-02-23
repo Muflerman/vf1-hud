@@ -15,6 +15,7 @@ AddEventHandler('onResourceStart', function(resourceName)
 end)
 
 function startHUD()
+    if not LocalPlayer.state.isLoggedIn then return end
     local ped = PlayerPedId()
     if not IsPedInAnyVehicle(ped) then
         DisplayRadar(false)
@@ -44,60 +45,100 @@ end
 
 CreateThread(function()
     while true do
-        local stamina = 0
-        local playerId = PlayerId()
-        local ped = PlayerPedId()
-        local vehicle = GetVehiclePedIsIn(ped, false)
-        if not IsPauseMenuActive() then
-            if not playerHUDActive then SendNUIMessage({ action = 'showPlayerHUD' }) end
-            if not IsEntityInWater(ped) then stamina = (100 - GetPlayerSprintStaminaRemaining(playerId)) end
-            if IsEntityInWater(ped) then stamina = (GetPlayerUnderwaterTimeRemaining(playerId) * 10) end
-            SendNUIMessage({
-                action = 'updatePlayerHUD',
-                health = (GetEntityHealth(ped) - 100),
-                armor = GetPedArmour(ped),
-                thirst = thirst,
-                hunger = hunger,
-                stamina = stamina,
-                voice = LocalPlayer.state['proximity'].distance,
-                talking = NetworkIsPlayerTalking(PlayerId()),
-            })
-            if IsPedInAnyVehicle(ped) and GetIsVehicleEngineRunning(vehicle) then
-                if not vehicleHUDActive then
-                    vehicleHUDActive = true
-                    DisplayRadar(true)
-                    TriggerEvent('hud:client:LoadMap')
-                    SendNUIMessage({ action = 'showVehicleHUD' })
-                end
-                local crossroads = getCrossroads(vehicle)
-                SendNUIMessage({
-                    action = 'updateVehicleHUD',
-                    speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
-                    fuel = math.ceil(GetVehicleFuelLevel(vehicle)),
-                    gear = GetVehicleCurrentGear(vehicle),
-                    street1 = crossroads[1],
-                    street2 = crossroads[2],
-                    direction = GetDirectionText(GetEntityHeading(vehicle)),
-                    rpm = GetVehicleCurrentRpm(vehicle),
-                    engine = GetVehicleEngineHealth(vehicle)
-                })
-            else
-                if vehicleHUDActive then
-                    vehicleHUDActive = false
-                    DisplayRadar(false)
-                    SendNUIMessage({ action = 'hideVehicleHUD' })
-                end
-            end
-        else
-            vehicleHUDActive = false
-            DisplayRadar(false)
-            SendNUIMessage({ action = 'hideVehicleHUD' })
-            SendNUIMessage({ action = 'hidePlayerHUD' })
-            playerHUDActive = false
-        end
-        SetBigmapActive(false, false)
-        SetRadarZoom(1000)
         Wait(Config.updateDelay)
+        if LocalPlayer.state.isLoggedIn then
+            local stamina = 0
+            local playerId = PlayerId()
+            local ped = PlayerPedId()
+            local vehicle = GetVehiclePedIsIn(ped, false)
+
+            if not IsPauseMenuActive() then
+                if not playerHUDActive then
+                    SendNUIMessage({ action = 'showPlayerHUD' })
+                    playerHUDActive = true
+                end
+
+                if not IsEntityInWater(ped) then stamina = (100 - GetPlayerSprintStaminaRemaining(playerId)) end
+                if IsEntityInWater(ped) then stamina = (GetPlayerUnderwaterTimeRemaining(playerId) * 10) end
+
+                SendNUIMessage({
+                    action = 'updatePlayerHUD',
+                    health = (GetEntityHealth(ped) - 100),
+                    armor = GetPedArmour(ped),
+                    thirst = thirst,
+                    hunger = hunger,
+                    stamina = stamina,
+                    voice = LocalPlayer.state['proximity'].distance,
+                    talking = NetworkIsPlayerTalking(PlayerId()),
+                })
+
+                local isBicycle = GetVehicleClass(vehicle) == 13
+
+                if IsPedInAnyVehicle(ped) and GetIsVehicleEngineRunning(vehicle) and not isBicycle then
+                    if not vehicleHUDActive then
+                        vehicleHUDActive = true
+                        DisplayRadar(true)
+                        TriggerEvent('hud:client:LoadMap')
+                        SendNUIMessage({ action = 'showVehicleHUD' })
+                    end
+                    local crossroads = getCrossroads(vehicle)
+                    SendNUIMessage({
+                        action = 'updateVehicleHUD',
+                        speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
+                        fuel = math.ceil(GetVehicleFuelLevel(vehicle)),
+                        gear = GetVehicleCurrentGear(vehicle),
+                        street1 = crossroads[1],
+                        street2 = crossroads[2],
+                        direction = GetDirectionText(GetEntityHeading(vehicle)),
+                        rpm = GetVehicleCurrentRpm(vehicle),
+                        engine = GetVehicleEngineHealth(vehicle)
+                    })
+                else
+                    if vehicleHUDActive then
+                        vehicleHUDActive = false
+                        DisplayRadar(false)
+                        SendNUIMessage({ action = 'hideVehicleHUD' })
+                    end
+                end
+            else
+                if playerHUDActive then
+                    SendNUIMessage({ action = 'hidePlayerHUD' })
+                    playerHUDActive = false
+                end
+                if vehicleHUDActive then
+                    SendNUIMessage({ action = 'hideVehicleHUD' })
+                    vehicleHUDActive = false
+                end
+                DisplayRadar(false)
+            end
+            SetBigmapActive(false, false)
+            SetRadarZoom(1000)
+        else
+            if playerHUDActive then
+                SendNUIMessage({ action = 'hidePlayerHUD' })
+                playerHUDActive = false
+            end
+            if vehicleHUDActive then
+                SendNUIMessage({ action = 'hideVehicleHUD' })
+                vehicleHUDActive = false
+            end
+            DisplayRadar(false)
+            Wait(1000)
+        end
+    end
+end)
+
+-- Dedicated thread to hide default HUD components every frame to prevent flashing
+CreateThread(function()
+    while true do
+        if LocalPlayer.state.isLoggedIn then
+            HideHudComponentThisFrame(6)  -- Vehicle Name
+            HideHudComponentThisFrame(7)  -- Area Name
+            HideHudComponentThisFrame(8)  -- Vehicle Class
+            HideHudComponentThisFrame(9)  -- Street Name
+            HideHudComponentThisFrame(10) -- Help Text (Optional, usually good to hide if using custom)
+        end
+        Wait(0)
     end
 end)
 

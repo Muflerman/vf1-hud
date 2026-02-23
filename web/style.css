@@ -237,7 +237,6 @@ body {
     position: absolute;
     bottom: 25px;
     right: 35px;
-    display: flex;
     flex-direction: column;
     gap: 12px;
     font-family: var(--font-main);

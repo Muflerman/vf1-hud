@@ -5,12 +5,29 @@ $(document).ready(function () {
         $('#health-bar').css('width', data.health + "%");
         $('#health-val').text(Math.ceil(data.health) + "%");
 
+        // Color transition: 120 (green) to 0 (red)
+        const hue = (data.health * 1.2); // 100% -> 120deg, 0% -> 0deg
+        const color = `hsl(${hue}, 100%, 45%)`;
+        $('#health-bar').css({
+            'background-color': color,
+            'box-shadow': `0 0 10px hsla(${hue}, 100%, 45%, 0.5)`
+        });
+
         // --- Armor Logic ---
         // Show only if armor > 0
         if (data.armor > 0) {
             $('#armor-row').removeClass('hidden');
             $('#armor-bar').css('width', data.armor + "%");
             $('#armor-val').text(Math.ceil(data.armor) + "%");
+
+            // Color transition: Blue (100%) to White (0%)
+            const sat = data.armor;
+            const light = 100 - (data.armor / 2); // 100% armor -> 50% light, 0% armor -> 100% light
+            const armorColor = `hsl(195, ${sat}%, ${light}%)`;
+            $('#armor-bar').css({
+                'background-color': armorColor,
+                'box-shadow': `0 0 10px hsla(195, ${sat}%, ${light}%, 0.5)`
+            });
         } else {
             $('#armor-row').addClass('hidden');
         }
@@ -116,7 +133,7 @@ $(document).ready(function () {
                 updatePlayerHUD(data);
                 break;
             case 'showVehicleHUD':
-                $('#vehicle-hud-container').fadeIn(400);
+                $('#vehicle-hud-container').css('display', 'flex').hide().fadeIn(400);
                 break;
             case 'hideVehicleHUD':
                 $('#vehicle-hud-container').fadeOut(400);

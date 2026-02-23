@@ -18,15 +18,11 @@ Special thanks to MT-Scripts for providing the excellent foundation on which thi
 ✨ Main Features
 👤 Dynamic Player HUD
 
-Health
-
-Armor (only visible if > 0)
-
-Hunger
-
-Thirst
-
-Voice indicator
+*   **Intelligent Visibility:** HUD stays hidden during selection screens (multicharacter), spawn menus, and pause menu. Only appears once the player is logged in.
+*   **Dynamic Health Bar:** Smart color transition. Green at 100%, smoothly degrading to deep red as health decreases.
+*   **Dynamic Armor Bar:** Premium blue-to-white gradient. Only visible if armor > 0.
+*   **Hunger & Thirst:** Clean indicators with smooth updates.
+*   **Voice indicator:** Integrated voice range feedback.
 
 🎤 Smart Voice System
 
@@ -50,24 +46,17 @@ Only appears during physical activity
 
 🚗 Premium Car HUD
 
-High-contrast speedometer
+*   **Fixed Visibility:** The Car HUD is strictly tied to vehicle state. Only appears when inside a motorized vehicle with the engine running.
+*   **Bicycle Exclusion:** The Car HUD automatically stays hidden when riding bicycles (Class 13) for a cleaner, more realistic experience.
+*   **High-contrast speedometer:** Crisp and clear speed reading.
+*   **Vibration effect:** Immersive shaking effect at high speeds (> 220 KMH).
+*   **Segmented RPM bar:** Dynamic and smooth RPM visualizer.
+*   **Vertical indicators:** Engine health and Fuel level bars.
+*   **Styled headers:** Location, Street, and Gear boxes in amber/brown style.
 
-Vibration effect at high speeds (> 220 KMH)
-
-Dynamic and smooth segmented RPM bar
-
-Vertical Engine and Fuel indicators
-
-Amber/Brown styled header boxes for:
-
-LOCATION
-
-STREET
-
-GEAR
-(Displayed in ALL CAPS)
-
-Car HUD only appears when the vehicle engine is running
+✨ Interface Cleanliness
+*   **Zero-Flicker Native Hiding:** Deep integration to hide default GTA V components (Vehicle Name, Area, Street, etc.) every frame, ensuring they NEVER flash or appear over our premium HUD.
+*   **Optimized Map Alignment:** Square minimap perfectly aligned and framed for all resolutions.
 
 🗺 Optimized Square Minimap
 

@@ -1,9 +1,7 @@
 # VF1 Premium HUD
 Rediseño completo y optimizado del HUD para FiveM por **mfl-scrpts**.
-![2cde3062a5b1ee9caa219047fa960573](https://github.com/user-attachments/assets/ee08973c-14bc-4258-99a6-6b236dc6623c)
-![8b90a7c788e4cf45bff9ac83b94153c4](https://github.com/user-attachments/assets/7c8cee6a-a73b-494f-a6c9-1d4a4d22d7cb)
-![76938c9968fc031fad35565497eea9ae](https://github.com/user-attachments/assets/46a284c0-3ed2-4c12-b87d-d766f5b2dd64)
-![8b906999e4e2cf1417b688b738324049](https://github.com/user-attachments/assets/6dd70faa-e946-43e6-9bde-7a72135085a6)
+
+![134269fa65955b72aa6799897648fabb](https://github.com/user-attachments/assets/1441c5bc-abe1-4471-a672-52b010509ede)
 
 🎮 vf1-hud
 
